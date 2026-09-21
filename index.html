@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tune Slots — Spotify Premium</title>
+    <meta
+      name="description"
+      content="A private slot on a real Spotify Family plan. Your own account, delivered in minutes."
+    />
+    <meta name="theme-color" content="#0b0d0c" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <div class="glow" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="logo" href="#top">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+            <circle cx="12" cy="12" r="12" fill="var(--accent)" />
+            <path
+              d="M6.4 9.1c3.5-1 7.6-.7 10.6 1.1M7.2 12.1c2.9-.8 6.3-.5 8.8.9M8 15c2.3-.6 5-.4 7 .7"
+              stroke="#0b0d0c"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              fill="none"
+            />
+          </svg>
+          <span data-brand></span>
+        </a>
+
+        <nav class="nav" aria-label="Main">
+          <a href="#pricing" data-i18n="navPricing"></a>
+          <a href="#why" data-i18n="navWhy"></a>
+          <a href="#faq" data-i18n="navFaq"></a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="lang-btn" id="langToggle" type="button" data-i18n="langToggle"></button>
+          <a class="btn btn-sm" data-tg-link data-i18n="navOrder" href="#"></a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero wrap">
+        <span class="badge" data-i18n="heroBadge"></span>
+        <h1 data-i18n-html="heroTitle"></h1>
+        <p class="lead" data-i18n="heroLead"></p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" data-tg-link data-i18n="heroCtaPrimary" href="#"></a>
+          <a class="btn btn-ghost" href="#pricing" data-i18n="heroCtaSecondary"></a>
+        </div>
+
+        <div class="capacity" id="capacity" hidden>
+          <div class="capacity-bar"><span id="capacityFill"></span></div>
+          <p class="capacity-text" id="capacityText"></p>
+        </div>
+      </section>
+
+      <section class="section wrap" id="why">
+        <h2 data-i18n="whyTitle"></h2>
+        <p class="section-lead" data-i18n="whyLead"></p>
+
+        <div class="grid-4">
+          <article class="card">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 20a7.5 7.5 0 0115 0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <h3 data-i18n="why1Title"></h3>
+            <p data-i18n="why1Body"></p>
+          </article>
+
+          <article class="card">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M13 3L5 13.5h5.5L11 21l8-10.5h-5.5L13 3z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <h3 data-i18n="why2Title"></h3>
+            <p data-i18n="why2Body"></p>
+          </article>
+
+          <article class="card">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 3l7.5 3v5.5c0 4.4-3.1 8.2-7.5 9.5-4.4-1.3-7.5-5.1-7.5-9.5V6L12 3z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M9 12l2 2 4-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <h3 data-i18n="why3Title"></h3>
+            <p data-i18n="why3Body"></p>
+          </article>
+
+          <article class="card">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M20 12a8 8 0 10-3 6.2V21l3.5-2.2A8 8 0 0020 12z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <h3 data-i18n="why4Title"></h3>
+            <p data-i18n="why4Body"></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section wrap" id="pricing">
+        <h2 data-i18n="pricingTitle"></h2>
+        <p class="section-lead" data-i18n="pricingLead"></p>
+        <div class="grid-4 plans" id="plans"></div>
+        <p class="rial-note" id="rialNote" hidden></p>
+      </section>
+
+      <section class="section wrap" id="faq">
+        <h2 data-i18n="faqTitle"></h2>
+        <div class="faq" id="faqList"></div>
+      </section>
+
+      <section class="section wrap">
+        <div class="cta">
+          <h2 data-i18n="ctaTitle"></h2>
+          <p data-i18n="ctaLead"></p>
+          <a class="btn btn-primary" data-tg-link data-i18n="ctaButton" href="#"></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <span data-brand></span>
+        <div class="footer-links">
+          <a data-support-link href="#" data-i18n="footerSupport"></a>
+          <span class="muted" data-i18n="footerRights"></span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="assets/i18n.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
