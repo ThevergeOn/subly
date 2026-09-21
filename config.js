@@ -5,8 +5,8 @@
 
 window.SITE_CONFIG = {
   brand: {
-    name: "Tune Slots",
-    nameFa: "تیون اسلات",
+    name: "Subly",
+    nameFa: "سابلی",
     // Telegram bot username WITHOUT the @  —  یوزرنیم بات بدون @
     telegramBot: "YOUR_BOT_USERNAME",
     // Your personal Telegram for support, WITHOUT the @  —  آیدی پشتیبانی بدون @

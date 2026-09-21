@@ -1,9 +1,9 @@
 {
-  "name": "tune-slots-bot",
+  "name": "subly-bot",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Telegram order bot for the Tune Slots site. Zero dependencies.",
+  "description": "Telegram order bot for the Subly site. Zero dependencies.",
   "engines": { "node": ">=18" },
   "scripts": {
     "start": "node bot.js"

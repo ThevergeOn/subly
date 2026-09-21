@@ -1,7 +1,7 @@
-# Tune Slots
+# Subly
 
-A small bilingual (English / فارسی) landing page for selling Spotify Premium Family
-slots, wired to a Telegram order bot and PayPal.
+A small bilingual (English / فارسی) landing page for selling shared-subscription
+slots — currently Spotify Premium Family — wired to a Telegram order bot and PayPal.
 
 - Static site — no build step, no framework, no dependencies.
 - Language toggle with full RTL support; the choice is remembered.
