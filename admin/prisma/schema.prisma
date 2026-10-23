@@ -1,0 +1,134 @@
+// ---------------------------------------------------------------------------
+// The shape of the database. Every change here becomes a migration — a numbered
+// SQL file that Prisma writes for you and that you can read.
+// هر تغییر در این فایل یک migration می‌سازد: یک فایل SQL شماره‌دار و قابل خواندن.
+//
+//   npx prisma migrate dev --name <what-changed>   apply a change
+//   npx prisma studio                              browse the data visually
+// ---------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // sqlite = one file on disk, nothing to install. We switch this one line to
+  // "postgresql" when we deploy — the models below do not change.
+  // Since Prisma 7 the connection URL lives in prisma.config.ts, not here.
+  provider = "sqlite"
+}
+
+// ---------------------------------------------------------------------------
+// Plan — a Family subscription YOU buy from Spotify. One plan holds N slots.
+// پلن فمیلی که خودت می‌خری. هر پلن چند اسلات دارد.
+// ---------------------------------------------------------------------------
+model Plan {
+  id         Int      @id @default(autoincrement())
+  label      String // "Family #1"
+  provider   String   @default("spotify") // ready for netflix/youtube later
+  costTry    Float // what you pay per month, in Turkish lira
+  slotsTotal Int      @default(5) // sellable slots, admin not counted
+  purchasedAt DateTime
+  expiresAt  DateTime // when YOUR plan renews/dies
+  status     String   @default("active") // active | expired | dead
+  note       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // One plan has many subscriptions. This line creates no column — it is the
+  // readable side of the foreign key that lives on Subscription.
+  subscriptions Subscription[]
+}
+
+// ---------------------------------------------------------------------------
+// Customer — a person who buys a slot. Lives on its own so one person can
+// renew many times without being retyped.
+// ---------------------------------------------------------------------------
+model Customer {
+  id       Int     @id @default(autoincrement())
+  name     String
+  telegram String? // @username — for you to find them
+  // The numeric chat id. The bot can only MESSAGE someone it has this for,
+  // and it only learns it once the person has talked to the bot.
+  // بات فقط به کسی می‌تواند پیام بدهد که این عدد را از او داشته باشد.
+  telegramChatId String?
+  email          String?
+  note           String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions Subscription[]
+}
+
+// ---------------------------------------------------------------------------
+// Subscription — ONE slot sold to ONE customer for a fixed term.
+// This is the table everything else hangs off.
+// یک اسلات فروخته‌شده به یک مشتری برای یک دوره مشخص.
+// ---------------------------------------------------------------------------
+model Subscription {
+  id         Int      @id @default(autoincrement())
+  planId     Int // foreign key → Plan.id
+  customerId Int // foreign key → Customer.id
+  months     Int
+  priceToman Int // whole toman — integers, never floats, for money
+  priceUsd   Float? // only set when they paid by PayPal
+  startedAt  DateTime
+  expiresAt  DateTime
+  status     String   @default("active") // active | expired | cancelled
+  note       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  plan      Plan          @relation(fields: [planId], references: [id])
+  customer  Customer      @relation(fields: [customerId], references: [id])
+  payments  Payment[]
+  reminders ReminderLog[]
+
+  // Indexes make the reminder query fast. The daily job asks "which rows expire
+  // in the next 7 days?" — without this the database reads every row.
+  @@index([expiresAt])
+  @@index([status])
+}
+
+// ---------------------------------------------------------------------------
+// Payment — money actually received. Separate from Subscription because one
+// subscription can be paid in instalments, or refunded.
+// ---------------------------------------------------------------------------
+model Payment {
+  id             Int      @id @default(autoincrement())
+  subscriptionId Int
+  amount         Float
+  currency       String   @default("IRT") // IRT | USD | TRY
+  method         String // card | paypal | crypto | cash
+  paidAt         DateTime
+  reference      String? // last 4 digits, PayPal txn id, whatever
+  note           String?
+
+  createdAt DateTime @default(now())
+
+  // onDelete: Cascade — delete a subscription and its payments go with it,
+  // enforced by the database, not by our code.
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([paidAt])
+}
+
+// ---------------------------------------------------------------------------
+// ReminderLog — proof that a reminder was sent, so the daily job never sends
+// the same one twice. The @@unique below is what guarantees that: the DATABASE
+// refuses a duplicate, so a bug in our code cannot spam a customer.
+// ---------------------------------------------------------------------------
+model ReminderLog {
+  id             Int      @id @default(autoincrement())
+  subscriptionId Int
+  kind           String // d7 | d3 | d1 | expired
+  channel        String   @default("telegram")
+  sentAt         DateTime @default(now())
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([subscriptionId, kind])
+}
