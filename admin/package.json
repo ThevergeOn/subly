@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "bot:dev": "tsx scripts/dev-bot.ts",
+    "reminders:dev": "curl -s localhost:3000/api/cron/reminders | head -c 2000"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "7.10.1",
@@ -14,7 +16,8 @@
     "next": "16.4.3",
     "prisma": "7.10.1",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

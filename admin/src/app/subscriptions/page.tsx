@@ -1,5 +1,7 @@
 import { connection } from "next/server";
 import { Suspense } from "react";
+import Link from "next/link";
+import { RowActions } from "@/components/RowActions";
 import { Skeleton } from "@/components/Skeleton";
 import { db } from "@/lib/db";
 import { daysLabel, daysUntil, date, toman } from "@/lib/format";
@@ -14,7 +16,15 @@ import { daysLabel, daysUntil, date, toman } from "@/lib/format";
 export default function SubscriptionsPage() {
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-      <h1 className="text-xl font-semibold tracking-tight">Subscriptions</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-semibold tracking-tight">Subscriptions</h1>
+        <Link
+          href="/subscriptions/new"
+          className="rounded-full bg-emerald-500 px-4 py-2 text-sm font-semibold text-emerald-950"
+        >
+          New
+        </Link>
+      </div>
       <Suspense fallback={<Skeleton />}>
         <SubscriptionsTable />
       </Suspense>
@@ -48,6 +58,7 @@ async function SubscriptionsTable() {
               <th className="px-4 py-3 text-right font-medium">Price</th>
               <th className="px-4 py-3 font-medium">Paid</th>
               <th className="px-4 py-3 font-medium">Expires</th>
+              <th className="px-4 py-3 text-right font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10">
@@ -57,7 +68,14 @@ async function SubscriptionsTable() {
               return (
                 <tr key={sub.id} className="hover:bg-white/[0.02]">
                   <td className="px-4 py-3">
-                    <p className="font-medium">{sub.customer.name}</p>
+                    <p className="font-medium">
+                      {sub.customer.name}
+                      {sub.status === "pending" && (
+                        <span className="ml-2 rounded-full border border-amber-500/40 px-2 py-0.5 text-[10px] uppercase text-amber-400">
+                          pending
+                        </span>
+                      )}
+                    </p>
                     {sub.customer.telegram && (
                       <p className="text-xs text-neutral-500">{sub.customer.telegram}</p>
                     )}
@@ -77,6 +95,9 @@ async function SubscriptionsTable() {
                       {daysLabel(left)}
                     </span>
                     <p className="text-xs text-neutral-600">{date(sub.expiresAt)}</p>
+                  </td>
+                  <td className="px-4 py-3">
+                    <RowActions id={sub.id} status={sub.status} />
                   </td>
                 </tr>
               );

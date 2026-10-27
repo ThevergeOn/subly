@@ -6,7 +6,8 @@ slots — currently Spotify Premium Family — wired to a Telegram order bot and
 - Static site — no build step, no framework, no dependencies.
 - Language toggle with full RTL support; the choice is remembered.
 - Every plan button deep-links into your Telegram bot with the chosen plan attached.
-- A zero-dependency Node bot picks that up, quotes the price and pings you on each order.
+- The Telegram bot lives in the admin app (`admin/`), so an order placed in a chat
+  lands straight in the database.
 
 ---
 
@@ -40,31 +41,10 @@ python3 -m http.server 8080
 
 Then open <http://localhost:8080>.
 
-## 3. Run the bot
+## 3. The bot and the admin panel
 
-Create the bot with [@BotFather](https://t.me/BotFather), then:
-
-```bash
-cd bot && cp .env.example .env
-```
-
-Fill in `BOT_TOKEN` and `ADMIN_CHAT_ID` (get your numeric id from
-[@userinfobot](https://t.me/userinfobot)), then:
-
-```bash
-cd bot && node --env-file=.env bot.js
-```
-
-The bot reads its plans straight out of `../config.js`, so the site and the bot
-can never quote different prices. It answers in Persian or English depending on
-each user's Telegram language, and messages you the moment someone taps
-"I have paid".
-
-To keep it running on a server:
-
-```bash
-cd bot && nohup node --env-file=.env bot.js > bot.log 2>&1 &
-```
+Both live in [`admin/`](admin/) — a Next.js app that is the front end, the back
+end and the bot in one. See [admin/README.md](admin/README.md).
 
 ## 4. Publish
 

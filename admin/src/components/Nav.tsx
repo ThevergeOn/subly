@@ -2,7 +2,8 @@ import Link from "next/link";
 
 const LINKS = [
   { href: "/", label: "Dashboard" },
-  { href: "/subscriptions", label: "Subscriptions" }
+  { href: "/subscriptions", label: "Subscriptions" },
+  { href: "/subscriptions/new", label: "New" }
 ];
 
 export function Nav() {
